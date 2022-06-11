@@ -9,4 +9,3 @@ export default function JokeRoute() {
     </div>
   );
 }
-// TODO: start from https://remix.run/docs/en/v1/tutorials/jokes#styling
