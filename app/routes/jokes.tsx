@@ -25,8 +25,6 @@ export const loader: LoaderFunction = async () => {
   return json(data);
 };
 
-// TODO: start from #Network Type Safety
-
 export default function JakeRoute() {
   const data = useLoaderData<LoaderData>();
 
