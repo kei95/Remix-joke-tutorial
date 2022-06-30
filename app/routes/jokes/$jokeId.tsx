@@ -3,7 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import type { Joke } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
 
-import { db } from "utils/db.server";
+import { db } from "~/utils/db.server";
 
 type LoaderData = { joke: Joke };
 

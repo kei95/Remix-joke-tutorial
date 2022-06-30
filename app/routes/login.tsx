@@ -1,10 +1,11 @@
 import { json } from "@remix-run/node";
 import type { LinksFunction, ActionFunction } from "@remix-run/node";
 
+import { login, createUserSession } from "~/utils/session.server";
 import { Link, useActionData, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "../styles/login.css";
-import { db } from "utils/db.server";
+import { db } from "~/utils/db.server";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: stylesUrl }];
@@ -74,10 +75,15 @@ export const action: ActionFunction = async ({ request }) => {
 
   switch (loginType) {
     case "login":
-      return badRequest({
-        fields,
-        formError: "Not implemented",
-      });
+      const user = await login({ username, password });
+      console.log({ user });
+      if (!user) {
+        return badRequest({
+          fields,
+          formError: `Username/Password combination is incorrect`,
+        });
+      }
+      return createUserSession(user.id, redirectTo);
     case "register": {
       const userExists = await db.user.findFirst({
         where: { username },
@@ -103,7 +109,6 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-//TODO: start from; Sweet! Now it's time for the juicy stuff.
 export default function Login() {
   const actionData = useActionData<ActionData>();
   const [searchParams] = useSearchParams();

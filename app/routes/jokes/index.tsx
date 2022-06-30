@@ -2,7 +2,7 @@ import { json } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
 import type { Joke } from "@prisma/client";
 
-import { db } from "utils/db.server";
+import { db } from "~/utils/db.server";
 import { Link, useLoaderData } from "@remix-run/react";
 
 type LoaderData = { randomJoke: Joke };
